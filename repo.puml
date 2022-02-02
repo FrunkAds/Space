@@ -1,0 +1,18 @@
+@startuml
+interface com.example.space.repos.UserRepository {
+~ User findByUsername(String)
+~ void deleteById(Long)
+~ User findByEmail(String)
+~ User findByActivationCode(String)
+}
+interface com.example.space.repos.ArticleRepository {
+~ Article findByText(String)
+}
+interface com.example.space.repos.PostRepository {
+}
+
+
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.space.repos.UserRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.space.repos.ArticleRepository
+org.springframework.data.repository.CrudRepository <|-- com.example.space.repos.PostRepository
+@enduml

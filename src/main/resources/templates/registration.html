@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Будь ласка, зареєструйтеся</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+    <style>
+        body {
+            background-image: url("https://drasler.ru/wp-content/uploads/2019/05/%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81-%D0%B2-%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC-%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8-%D0%BD%D0%B0-%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD-3.jpg");
+            color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a th:href="@{/home}" class="nav-link px-2 link-secondary">Головна сторінка</a></li>
+                <li><a th:href="@{/user/post}" class="nav-link px-2 link-secondary">Пости</a></li>
+                <li><a th:href="@{/user/post/add}" class="nav-link px-2 link-secondary">Додати поста</a></li>
+            </ul>
+
+        </header>
+    </div>
+</header>
+
+<form class="form-signin" method="post" th:action="@{/registration}">
+    <div class="border border-secondary rounded p-3">
+        <h2 class="form-signin-heading">Please sign out</h2>
+        <p th:text="${message}"/>
+
+        <div><label for="username" class="sr-only mb-5">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username">
+        </div>
+
+        <div><label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+        </div>
+
+        <div><label for="firstName" class="sr-only">Fist Name</label>
+            <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name">
+        </div>
+
+        <div><label for="lastName" class="sr-only">Last Name</label>
+            <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name">
+        </div>
+
+        <div><label for="email" class="sr-only">Email</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+        </div>
+
+        <div>
+            <input class="btn btn-outline-primary me-2 mt-1" type="submit" value="Sign Out"/>
+            <input type="button" class="btn btn-outline-primary mt-1 ml-5" value="Sig In" onclick="relocate_home()"/>
+            <script>
+                function relocate_home(){
+                    location.href="/login";
+                }
+            </script>
+        </div>
+
+    </div>
+</form>
+
+</body>
+</html>

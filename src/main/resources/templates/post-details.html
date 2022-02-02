@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пост детальніше</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body{
+            background-image: url("https://drasler.ru/wp-content/uploads/2019/05/%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81-%D0%B2-%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC-%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8-%D0%BD%D0%B0-%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD-3.jpg")  ;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a th:href="@{/user/home}" class="nav-link px-2 link-secondary">Головна сторінка</a></li>
+                <li><a th:href="@{/user/post/add}" class="nav-link px-2 link-secondary">Додати поста</a></li>
+                <li><a th:href="@{/user/my-post}" class="nav-link px-2 link-secondary">Мої пости</a></li>
+            </ul>
+            <div class="col-md-3 text-end">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-outline-primary me-2">Вийти
+                    </button>
+                    <a th:href="@{/user}" class="btn btn-outline-primary me-2">Профіль</a>
+                </form>
+            </div>
+        </header>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card-img-top" ><br>
+        <div class="col">
+            <div th:each="post:${posts}" class="card shadow-sm">
+                <div>
+                    <img th:src="@{/img/{filename}(filename=${post.getUser().getFilename()})}" alt="User"
+                         style="float: left; width: 50px;height: 50px;border-radius: 50px"/>
+                    <b th:text="${post.getUser().getUsername()}"/>
+                </div>
+                <img th:src="@{/img/{filename}(filename=${post.getFilename()})}" alt="Post"/>
+                <div class="card-body">
+                    <b><p class="card-text" th:text="${post.title}"/></b>
+
+                    <p class="card-text" th:text="${post.fullText}"/>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <form class="btn-group" th:action="'/user/post/'+ ${post.id}+'/remove'" method="post">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                    th:if="${post.user.username == user.getUsername()||user.getRoles().contains(admin)}">Remove
+                            </button>
+                            <a th:href="'/user/post/'+ ${post.id}+'/edit'" class="btn btn-sm btn-outline-secondary"
+                                th:if="${post.user.username == user.getUsername()||user.getRoles().contains(admin)}">Edit</a>
+                        </form>
+                        <small class="text-muted" th:text="${post.date}"></small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lm-mt-20 l-mt-28">
+
+                <!--
+                            </div>
+
+                            <div class="comments__title l-island-a l-pb-10 lm-pt-30 l-fs-18 l-fw-700 l-mb-15" data-count="73">
+                                <span class="comments__title__long" th:text="${el.getComments().size()} + ' comment'"></span>
+                            </div>
+                            <div class="comments">
+                                <form method="post" th:action="'/user/post/' + ${el.id}">
+                                    <textarea type="text" name="comment" placeholder="Введіть комментар" class="form-control"></textarea>
+                                    <button type="submit" class="btn btn-success">Відправити</button>
+                                </form>
+                                <div class="comments comments-ready mb-5">
+                                    <div class="comment comment-raedy mb-2" th:each="comment : ${el.getComments()}">
+                                        <p th:text="${comment.message}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            -->
+            </div>
+        </div>
+    </div>
+</div>
+
+    <footer>
+        <div class="container">
+            <footer class="py-3 my-4">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                    <li class="nav-item"><a th:href="@{/user/home}" class="nav-link px-2 text-muted">Головна сторінка</a>
+                    </li>
+                </ul>
+                <p class="text-center text-muted">© 2021 Company, Inc</p>
+            </footer>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,27 @@
+@startuml
+class com.example.space.config.MailConfig {
+- String host
+- String username
+- String password
+- int post
+- String protocol
+- String debug
++ JavaMailSender getMailSender()
+}
+class com.example.space.config.MvcConfig {
+- String uploadPath
++ void addViewControllers(ViewControllerRegistry)
++ void addResourceHandlers(ResourceHandlerRegistry)
+}
+class com.example.space.config.WebSecurityConfig {
+- CustomOAuth2UserService oAuth2UserService
+- UserService userService
+- OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler
+# void configure(HttpSecurity)
+# void configure(AuthenticationManagerBuilder)
+}
+
+
+org.springframework.web.servlet.config.annotation.WebMvcConfigurer <|.. com.example.space.config.MvcConfig
+org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter <|-- com.example.space.config.WebSecurityConfig
+@enduml

@@ -1,0 +1,188 @@
+    @startuml
+class com.example.space.config.MailConfig {
+- String host
+- String username
+- String password
+- int post
+- String protocol
+- String debug
++ JavaMailSender getMailSender()
+}
+class com.example.space.models.Parsing {
+- ParsingService parsingService
++ void parseArticle()
+}
+class com.example.space.service.CustomOAuth2UserService {
++ OAuth2User loadUser(OAuth2UserRequest)
+}
+class com.example.space.models.CustomOAuth2User {
+- OAuth2User oAuth2User
++ Map<String,Object> getAttributes()
++ Collection<? extends GrantedAuthority> getAuthorities()
++ String getName()
++ String getEmail()
++ String getFullName()
++ String getFamilyName()
++ String getGivenName()
+}
+class com.example.space.controller.AdminControler {
+- UserRepository userRepository
+- MailSender mailSender
+- String uploadPath
++ String userList(Model)
++ String editUser(User,Model)
++ String showUser(User,Model)
++ String editUser(User,String,String,String,String,MultipartFile)
++ String removeUser(User)
++ String sendMail(Model)
++ String sendMail(String,String,String,User)
+}
+class com.example.space.models.User {
+- Long id
+- String sub
+- String username
+- boolean active
+- String firstName
+- String email
+- String activationCode
+- AuthenticationProvider authenticationProvider
+- List<Post> posts
+- String filename
+- Set<Role> roles
++ boolean isAccountNonExpired()
++ boolean isAccountNonLocked()
++ boolean isCredentialsNonExpired()
++ boolean isEnabled()
++ Collection<? extends GrantedAuthority> getAuthorities()
+}
+class com.example.space.controller.SecurityController {
+- UserRepository userRepository
+- UserService userService
+- MailSender mailSender
++ String registration(Model)
++ String addUser(String,String,String,Model,User)
++ String activate(String,Model)
+}
+class com.example.space.service.OAuth2LoginSuccessHandler {
+- UserService userService
++ void onAuthenticationSuccess(HttpServletRequest,HttpServletResponse,Authentication)
+}
+class com.example.space.models.Post {
+- Long id
+- String title
+- String anons
+- String fullText
+- String date
+- User user
+- String filename
++ String getFilename()
++ void setFilename(String)
++ User getUser()
++ void setUser(User)
++ String getDate()
++ void setDate()
++ Long getId()
++ void setId(Long)
++ String getTitle()
++ void setTitle(String)
++ String getAnons()
++ void setAnons(String)
++ String getFullText()
++ void setFullText(String)
+}
+class com.example.space.service.UserService {
+- UserRepository userRepository
++ UserDetails loadUserByUsername(String)
++ void processOAuthPostLogin(String)
++ User getUserByEmail(String)
++ void createNewUserAfterOAuthLoginSuccess(String,String,String,String,AuthenticationProvider)
++ void updateUserAfterOAuthLoginSuccess(User,String,AuthenticationProvider)
++ boolean activeUser(String)
+}
+interface com.example.space.repos.PostRepository {
+}
+class com.example.space.controller.HomeController {
+- ParsingService parsingService
+- UserRepository userRepository
++ String home(Model)
++ String user(Model,Principal)
+}
+class com.example.space.controller.PostController {
+- PostRepository postRepository
+- UserRepository userRepository
+- String uploadPath
++ String allShow(Model)
++ String hello(Model)
++ String postAdd(String,String,String,Principal,MultipartFile)
+- String postDetails(long,Model,Principal)
++ String removePost(long)
++ String editPost(long,Model)
++ String postEditPost(long,String,String,String,MultipartFile)
+}
+class com.example.space.controller.MyPostController {
+- PostRepository postRepository
+- UserRepository userRepository
++ String myPostShow(Model,Principal)
+}
+class com.example.space.SpaceApplication {
++ {static} void main(String[])
+}
+class com.example.space.service.MailSender {
+- JavaMailSender mailSender
+- String username
++ void send(String,String,String)
+}
+class com.example.space.service.ParsingService {
+- ArticleRepository articleRepository
++ void save(Article)
++ boolean isExist(String)
++ List<Article> getAllArticle()
++ Article getByText(String)
+}
+class com.example.space.models.Article {
+- Long id
+- String url
+- String text
+}
+interface com.example.space.repos.UserRepository {
+~ User findByUsername(String)
+~ void deleteById(Long)
+~ User findByEmail(String)
+~ User findByActivationCode(String)
+}
+interface com.example.space.repos.ArticleRepository {
+~ Article findByText(String)
+}
+class com.example.space.config.MvcConfig {
+- String uploadPath
++ void addViewControllers(ViewControllerRegistry)
++ void addResourceHandlers(ResourceHandlerRegistry)
+}
+class com.example.space.controller.UserController {
+- PostRepository postRepository
+- UserRepository userRepository
+- String uploadPath
++ String userPage(Model,Principal)
++ String userEdit(Model,Principal)
++ String userEditPost(String,String,String,Principal,MultipartFile)
+}
+class com.example.space.config.WebSecurityConfig {
+- CustomOAuth2UserService oAuth2UserService
+- UserService userService
+- OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler
+# void configure(HttpSecurity)
+# void configure(AuthenticationManagerBuilder)
+}
+
+
+org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService <|-- com.example.space.service.CustomOAuth2UserService
+org.springframework.security.oauth2.core.user.OAuth2User <|.. com.example.space.models.CustomOAuth2User
+org.springframework.security.core.userdetails.UserDetails <|.. com.example.space.models.User
+org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler <|-- com.example.space.service.OAuth2LoginSuccessHandler
+org.springframework.security.core.userdetails.UserDetailsService <|.. com.example.space.service.UserService
+org.springframework.data.repository.CrudRepository <|-- com.example.space.repos.PostRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.space.repos.UserRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.space.repos.ArticleRepository
+org.springframework.web.servlet.config.annotation.WebMvcConfigurer <|.. com.example.space.config.MvcConfig
+org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter <|-- com.example.space.config.WebSecurityConfig
+@enduml

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Space's</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body {
+            background-image: url("https://drasler.ru/wp-content/uploads/2019/05/%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81-%D0%B2-%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC-%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8-%D0%BD%D0%B0-%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD-3.jpg");
+            color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a th:href="@{/home}" class="nav-link px-2 link-secondary">Головна сторінка</a></li>
+                <li><a th:href="@{/user/post}" class="nav-link px-2 link-secondary">Пости</a></li>
+                <li><a th:href="@{/user/post/add}" class="nav-link px-2 link-secondary">Додати поста</a></li>
+            </ul>
+            <div class="col-md-3 text-end">
+                <form th:action="@{/user/home}" method="post">
+                    <button type="submit" class="btn btn-outline-primary me-2">Війти
+                    </button>
+                </form>
+            </div>
+        </header>
+    </div>
+</header>
+
+
+<div >
+    <h1 class="text-center" style="color: #f26160">Космос</h1>
+    <div class=" d-flex flex-wrap align-items-center justify-content-center" >
+        <div class="card">
+            <div class="card-text">
+                <ul>
+                    <li class="default-news-list " th:each="news:${article}" style="color: rgba(10,11,29,0.85)">
+                        <a th:href="${news.getUrl()}" target="_blank" style="color: rgba(10,11,29,0.85)">
+                            <div class="news-text" th:text="${news.getText()}"></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <footer class="py-3 my-4">
+        <p class="text-center text-muted">© 2021 Company, Inc</p>
+    </footer>
+</div>
+
+</body>
+</html>

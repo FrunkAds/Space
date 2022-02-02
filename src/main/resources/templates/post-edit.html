@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редагувати пост</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body{
+            background-image: url("https://drasler.ru/wp-content/uploads/2019/05/%D0%9A%D0%BE%D1%81%D0%BC%D0%BE%D1%81-%D0%B2-%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC-%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8-%D0%BD%D0%B0-%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD-3.jpg")  ;
+            color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a th:href="@{/user/home}" class="nav-link px-2 link-secondary">Головна сторінка</a></li>
+                <li><a th:href="@{/user/post}" class="nav-link px-2 link-secondary">Пости</a></li>
+                <li><a th:href="@{/user/my-post}" class="nav-link px-2 link-secondary">Мої пости</a></li>
+            </ul>
+            <div class="col-md-3 text-end">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-outline-primary me-2">Вийти
+                    </button>
+                    <a th:href="@{/user}" class="btn btn-outline-primary me-2">Профіль</a>
+                </form>
+            </div>
+        </header>
+    </div>
+</header>
+
+<main>
+    <div class="container mt-5 mb-5">
+        <h1>Редагуівання поста</h1>
+        <div th:each="el :${post}">
+            <form th:action="'/user/post/'+${el.id}+'/edit'" method="post" enctype="multipart/form-data">
+                <input type="text" name="title" th:value="${el.title}" placeholder="Введіть назву поста" class="form-control"><br>
+                <input type="text" name="anons" th:value="${el.anons}" placeholder="Введіть анонс поста" class="form-control"><br>
+                <textarea type="text" name="fullText" th:text="${el.fullText}" placeholder="Введіть текст    поста" class="form-control"/><br>
+                <input class="btn btn-outline-primary"  type="file" name="file" >
+                <button type="submit" class="btn btn-outline-primary">Редагувати</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <footer class="py-3 my-4">
+            <p class="text-center text-muted">© 2021 Company, Inc</p>
+        </footer>
+    </div>
+</footer>
+</body>
+</html>

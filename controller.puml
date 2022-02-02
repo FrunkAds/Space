@@ -1,0 +1,53 @@
+@startuml
+class com.example.space.controller.PostController {
+- PostRepository postRepository
+- UserRepository userRepository
+- String uploadPath
++ String allShow(Model)
++ String hello(Model)
++ String postAdd(String,String,String,Principal,MultipartFile)
+- String postDetails(long,Model,Principal)
++ String removePost(long)
++ String editPost(long,Model)
++ String postEditPost(long,String,String,String,MultipartFile)
+}
+class com.example.space.controller.MyPostController {
+- PostRepository postRepository
+- UserRepository userRepository
++ String myPostShow(Model,Principal)
+}
+class com.example.space.controller.SecurityController {
+- UserRepository userRepository
+- UserService userService
+- MailSender mailSender
++ String registration(Model)
++ String addUser(String,String,String,Model,User)
++ String activate(String,Model)
+}
+class com.example.space.controller.UserController {
+- PostRepository postRepository
+- UserRepository userRepository
+- String uploadPath
++ String userPage(Model,Principal)
++ String userEdit(Model,Principal)
++ String userEditPost(String,String,String,Principal,MultipartFile)
+}
+class com.example.space.controller.AdminControler {
+- UserRepository userRepository
+- MailSender mailSender
+- String uploadPath
++ String userList(Model)
++ String editUser(User,Model)
++ String showUser(User,Model)
++ String editUser(User,String,String,String,String,MultipartFile)
++ String removeUser(User)
++ String sendMail(Model)
++ String sendMail(String,String,String,User)
+}
+class com.example.space.controller.HomeController {
+- ParsingService parsingService
+- UserRepository userRepository
++ String home(Model)
++ String user(Model,Principal)
+}
+@enduml

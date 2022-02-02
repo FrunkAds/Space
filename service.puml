@@ -1,0 +1,35 @@
+@startuml
+class com.example.space.service.CustomOAuth2UserService {
++ OAuth2User loadUser(OAuth2UserRequest)
+}
+class com.example.space.service.OAuth2LoginSuccessHandler {
+- UserService userService
++ void onAuthenticationSuccess(HttpServletRequest,HttpServletResponse,Authentication)
+}
+class com.example.space.service.MailSender {
+- JavaMailSender mailSender
+- String username
++ void send(String,String,String)
+}
+class com.example.space.service.ParsingService {
+- ArticleRepository articleRepository
++ void save(Article)
++ boolean isExist(String)
++ List<Article> getAllArticle()
++ Article getByText(String)
+}
+class com.example.space.service.UserService {
+- UserRepository userRepository
++ UserDetails loadUserByUsername(String)
++ void processOAuthPostLogin(String)
++ User getUserByEmail(String)
++ void createNewUserAfterOAuthLoginSuccess(String,String,String,String,AuthenticationProvider)
++ void updateUserAfterOAuthLoginSuccess(User,String,AuthenticationProvider)
++ boolean activeUser(String)
+}
+
+
+org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService <|-- com.example.space.service.CustomOAuth2UserService
+org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler <|-- com.example.space.service.OAuth2LoginSuccessHandler
+org.springframework.security.core.userdetails.UserDetailsService <|.. com.example.space.service.UserService
+@enduml

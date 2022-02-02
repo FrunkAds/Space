@@ -1,0 +1,5 @@
+@startuml
+class com.example.space.SpaceApplication {
++ {static} void main(String[])
+}
+@enduml
